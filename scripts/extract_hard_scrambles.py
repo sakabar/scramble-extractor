@@ -3,14 +3,17 @@
 usage: extract_hard_scramble.py <total_threshold> [<multiphase_threshold_list>...]
 """
 
+import logging
+import sys
+
 from docopt import docopt
 
-
-import sys
 from info.saxcy.scramble_extractor.extractor import Extractor
 
 
 def main():
+    logging.basicConfig(level=logging.WARNING)
+
     args = docopt(__doc__)
     total_threshold = float(args["<total_threshold>"])
     multiphase_threshold_list = map(float, args["<multiphase_threshold_list>"])
@@ -22,6 +25,7 @@ def main():
         solve_results = extractor.pickup_result_from_lines([line])
         if len(solve_results) == 1:
             print(solve_results[0].scramble)
+            # print(solve_results[0].total_sec)
 
     return 0
 
